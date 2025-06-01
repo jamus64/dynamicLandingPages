@@ -316,67 +316,101 @@
       text-align: center;
     }
 
-    .carousel-container {
+    .slider-container {
       position: relative;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 40px;
     }
 
-    .carousel-wrapper {
+    .slider-wrapper {
       display: flex;
       gap: 2rem;
       overflow-x: hidden;
       scroll-behavior: smooth;
       padding: 1rem 0;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
-    .carousel-card {
+    .slider-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider-card {
       flex: 0 0 300px;
       background: #1a1a1a;
       border-radius: 15px;
       padding: 2rem;
       color: var(--text-light);
       border: 1px solid rgba(255, 46, 99, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .carousel-card:hover {
+    .slider-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 46, 99, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .slider-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(255, 46, 99, 0.1);
       border-color: var(--primary-color);
     }
 
-    .carousel-card h3 {
+    .slider-card:hover::before {
+      opacity: 1;
+    }
+
+    .slider-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 1.5rem;
       margin-bottom: 1rem;
       color: var(--primary-color);
+      position: relative;
     }
 
-    .carousel-card ul {
+    .slider-card ul {
       list-style: none;
       padding: 0;
       margin: 0;
+      position: relative;
     }
 
-    .carousel-card li {
+    .slider-card li {
       margin-bottom: 0.5rem;
       padding-left: 1.5rem;
       position: relative;
     }
 
-    .carousel-card li::before {
+    .slider-card li::before {
       content: "•";
       color: var(--primary-color);
       position: absolute;
       left: 0;
     }
 
-    .carousel-button {
+    .slider-nav {
       position: absolute;
       top: 50%;
+      left: 0;
+      right: 0;
       transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .slider-nav-button {
       background: rgba(0, 0, 0, 0.5);
       color: white;
       border: none;
@@ -388,19 +422,21 @@
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      pointer-events: auto;
     }
 
-    .carousel-button:hover {
+    .slider-nav-button:hover {
       background: var(--primary-color);
+      transform: scale(1.1);
     }
 
-    .carousel-button.prev {
-      left: 0;
+    .slider-nav-button.prev {
+      margin-left: -20px;
     }
 
-    .carousel-button.next {
-      right: 0;
+    .slider-nav-button.next {
+      margin-right: -20px;
     }
 
     @media (max-width: 768px) {
@@ -408,8 +444,13 @@
         padding: 2rem 1rem;
       }
 
-      .carousel-card {
+      .slider-card {
         flex: 0 0 250px;
+      }
+
+      .slider-nav-button {
+        width: 35px;
+        height: 35px;
       }
     }
   </style>
@@ -446,36 +487,42 @@
     <!-- Lounges Carousel -->
     <section class="carousel-section">
       <h2 class="section-title">Premium Lounges</h2>
-      <div class="carousel-container">
-        <div class="carousel-wrapper" id="loungesCarousel">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="loungesCarousel">
           <!-- Lounges will be populated here -->
         </div>
-        <button class="carousel-button prev" onclick="moveCarousel('loungesCarousel', -1)">❮</button>
-        <button class="carousel-button next" onclick="moveCarousel('loungesCarousel', 1)">❯</button>
+        <div class="slider-nav">
+          <button class="slider-nav-button prev" onclick="moveSlider('loungesCarousel', -1)">❮</button>
+          <button class="slider-nav-button next" onclick="moveSlider('loungesCarousel', 1)">❯</button>
+        </div>
       </div>
     </section>
 
     <!-- Packages Carousel -->
     <section class="carousel-section">
       <h2 class="section-title">Premium Packages</h2>
-      <div class="carousel-container">
-        <div class="carousel-wrapper" id="packagesCarousel">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="packagesCarousel">
           <!-- Packages will be populated here -->
         </div>
-        <button class="carousel-button prev" onclick="moveCarousel('packagesCarousel', -1)">❮</button>
-        <button class="carousel-button next" onclick="moveCarousel('packagesCarousel', 1)">❯</button>
+        <div class="slider-nav">
+          <button class="slider-nav-button prev" onclick="moveSlider('packagesCarousel', -1)">❮</button>
+          <button class="slider-nav-button next" onclick="moveSlider('packagesCarousel', 1)">❯</button>
+        </div>
       </div>
     </section>
 
     <!-- Memberships Carousel -->
     <section class="carousel-section">
       <h2 class="section-title">Membership Options</h2>
-      <div class="carousel-container">
-        <div class="carousel-wrapper" id="membershipsCarousel">
+      <div class="slider-container">
+        <div class="slider-wrapper" id="membershipsCarousel">
           <!-- Memberships will be populated here -->
         </div>
-        <button class="carousel-button prev" onclick="moveCarousel('membershipsCarousel', -1)">❮</button>
-        <button class="carousel-button next" onclick="moveCarousel('membershipsCarousel', 1)">❯</button>
+        <div class="slider-nav">
+          <button class="slider-nav-button prev" onclick="moveSlider('membershipsCarousel', -1)">❮</button>
+          <button class="slider-nav-button next" onclick="moveSlider('membershipsCarousel', 1)">❯</button>
+        </div>
       </div>
     </section>
   </div>
@@ -596,7 +643,7 @@
         // Populate lounges
         const loungesHtml = data.venues.flatMap(venue => 
           venue.lounges.map(lounge => `
-            <div class="carousel-card">
+            <div class="slider-card">
               <h3>${lounge.name}</h3>
               <p>${lounge.description || 'Exclusive premium lounge experience'}</p>
             </div>
@@ -606,7 +653,7 @@
 
         // Populate packages
         const packagesHtml = data.premium_packages.map(pkg => `
-          <div class="carousel-card">
+          <div class="slider-card">
             <h3>${pkg.name}</h3>
             <ul>
               ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
@@ -617,7 +664,7 @@
 
         // Populate memberships
         const membershipsHtml = data.membership_products.map(membership => `
-          <div class="carousel-card">
+          <div class="slider-card">
             <h3>${membership.name}</h3>
             <ul>
               ${membership.features.map(feature => `<li>${feature}</li>`).join('')}
@@ -630,10 +677,10 @@
       }
     }
 
-    function moveCarousel(carouselId, direction) {
-      const carousel = document.getElementById(carouselId);
-      const scrollAmount = carousel.offsetWidth * 0.8;
-      carousel.scrollBy({
+    function moveSlider(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const scrollAmount = slider.offsetWidth * 0.8;
+      slider.scrollBy({
         left: direction * scrollAmount,
         behavior: 'smooth'
       });
