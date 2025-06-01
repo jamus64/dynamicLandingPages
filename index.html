@@ -298,6 +298,120 @@
       color: var(--primary-color);
       margin-bottom: 1rem;
     }
+
+    .product-carousels {
+      padding: 4rem 2rem;
+      background: #0a0a0a;
+    }
+
+    .carousel-section {
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 2rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .carousel-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      gap: 2rem;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding: 1rem 0;
+    }
+
+    .carousel-card {
+      flex: 0 0 300px;
+      background: #1a1a1a;
+      border-radius: 15px;
+      padding: 2rem;
+      color: var(--text-light);
+      border: 1px solid rgba(255, 46, 99, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .carousel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(255, 46, 99, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .carousel-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .carousel-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .carousel-card li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .carousel-card li::before {
+      content: "•";
+      color: var(--primary-color);
+      position: absolute;
+      left: 0;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-button:hover {
+      background: var(--primary-color);
+    }
+
+    .carousel-button.prev {
+      left: 0;
+    }
+
+    .carousel-button.next {
+      right: 0;
+    }
+
+    @media (max-width: 768px) {
+      .product-carousels {
+        padding: 2rem 1rem;
+      }
+
+      .carousel-card {
+        flex: 0 0 250px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -325,6 +439,45 @@
         <div class="images" id="localImages"></div>
       </div>
     </div>
+  </div>
+
+  <!-- Product Carousels -->
+  <div class="product-carousels">
+    <!-- Lounges Carousel -->
+    <section class="carousel-section">
+      <h2 class="section-title">Premium Lounges</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper" id="loungesCarousel">
+          <!-- Lounges will be populated here -->
+        </div>
+        <button class="carousel-button prev" onclick="moveCarousel('loungesCarousel', -1)">❮</button>
+        <button class="carousel-button next" onclick="moveCarousel('loungesCarousel', 1)">❯</button>
+      </div>
+    </section>
+
+    <!-- Packages Carousel -->
+    <section class="carousel-section">
+      <h2 class="section-title">Premium Packages</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper" id="packagesCarousel">
+          <!-- Packages will be populated here -->
+        </div>
+        <button class="carousel-button prev" onclick="moveCarousel('packagesCarousel', -1)">❮</button>
+        <button class="carousel-button next" onclick="moveCarousel('packagesCarousel', 1)">❯</button>
+      </div>
+    </section>
+
+    <!-- Memberships Carousel -->
+    <section class="carousel-section">
+      <h2 class="section-title">Membership Options</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper" id="membershipsCarousel">
+          <!-- Memberships will be populated here -->
+        </div>
+        <button class="carousel-button prev" onclick="moveCarousel('membershipsCarousel', -1)">❮</button>
+        <button class="carousel-button next" onclick="moveCarousel('membershipsCarousel', 1)">❯</button>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -433,6 +586,61 @@
     });
 
     loadEventPage();
+
+    // Load products data
+    async function loadProducts() {
+      try {
+        const response = await fetch('products.json');
+        const data = await response.json();
+        
+        // Populate lounges
+        const loungesHtml = data.venues.flatMap(venue => 
+          venue.lounges.map(lounge => `
+            <div class="carousel-card">
+              <h3>${lounge.name}</h3>
+              <p>${lounge.description || 'Exclusive premium lounge experience'}</p>
+            </div>
+          `)
+        ).join('');
+        document.getElementById('loungesCarousel').innerHTML = loungesHtml;
+
+        // Populate packages
+        const packagesHtml = data.premium_packages.map(pkg => `
+          <div class="carousel-card">
+            <h3>${pkg.name}</h3>
+            <ul>
+              ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('');
+        document.getElementById('packagesCarousel').innerHTML = packagesHtml;
+
+        // Populate memberships
+        const membershipsHtml = data.membership_products.map(membership => `
+          <div class="carousel-card">
+            <h3>${membership.name}</h3>
+            <ul>
+              ${membership.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('');
+        document.getElementById('membershipsCarousel').innerHTML = membershipsHtml;
+      } catch (error) {
+        console.error('Error loading products:', error);
+      }
+    }
+
+    function moveCarousel(carouselId, direction) {
+      const carousel = document.getElementById(carouselId);
+      const scrollAmount = carousel.offsetWidth * 0.8;
+      carousel.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Load products after the page loads
+    window.addEventListener('load', loadProducts);
   </script>
 </body>
 </html>
