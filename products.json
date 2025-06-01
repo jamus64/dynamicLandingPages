@@ -1,9 +1,3 @@
-
-
-
-Okay, I will remove the separate `private_suites` boolean and add "Private Suites" as an object to the `lounges` array for the "Utilita Arena Birmingham" venue, including a description property.
-
-```json
 {
   "venues": [
     {
@@ -110,4 +104,3 @@ Okay, I will remove the separate `private_suites` boolean and add "Private Suite
     }
   ]
 }
-```

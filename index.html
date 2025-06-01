@@ -300,7 +300,7 @@
     }
 
     .product-carousels {
-      padding: 4rem 2rem;
+      padding: 60px 50px;
       background: #0a0a0a;
     }
 
@@ -320,15 +320,15 @@
       position: relative;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 15px;
     }
 
     .slider-wrapper {
       display: flex;
-      gap: 2rem;
+      gap: 30px;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      padding: 1rem 0;
+      padding: 15px 0 60px;
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
@@ -338,57 +338,61 @@
     }
 
     .slider-card {
-      flex: 0 0 300px;
-      background: #1a1a1a;
-      border-radius: 15px;
-      padding: 2rem;
-      color: var(--text-light);
-      border: 1px solid rgba(255, 46, 99, 0.2);
-      transition: all 0.3s ease;
-      position: relative;
+      flex: 0 0 320px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: #343434 no-repeat center center / cover;
+      border-radius: 16px;
       overflow: hidden;
+      position: relative;
+      transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
     }
 
-    .slider-card::before {
-      content: '';
+    .slider-card::after {
+      content: "";
+      display: block;
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, transparent, rgba(255, 46, 99, 0.1));
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      width: 100%;
+      left: 0;
+      top: 0;
+      background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     }
 
-    .slider-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(255, 46, 99, 0.1);
-      border-color: var(--primary-color);
-    }
-
-    .slider-card:hover::before {
-      opacity: 1;
+    .slider-card.active {
+      flex-basis: 500px;
+      width: 500px;
+      height: auto;
+      box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
     }
 
     .slider-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary-color);
+      font-size: 28px;
+      line-height: 36px;
+      margin: 0 0 10px;
+      color: #fff;
       position: relative;
+      z-index: 1;
     }
 
     .slider-card ul {
-      list-style: none;
-      padding: 0;
       margin: 0;
+      color: #fff;
       position: relative;
+      z-index: 1;
+      list-style: none; /* Ensure no default list style */
+      padding: 0; /* Remove default padding */
     }
 
     .slider-card li {
-      margin-bottom: 0.5rem;
-      padding-left: 1.5rem;
+      margin-bottom: 5px;
+      padding-left: 15px;
       position: relative;
     }
 
@@ -397,6 +401,38 @@
       color: var(--primary-color);
       position: absolute;
       left: 0;
+    }
+
+    .slider-card-desc {
+      padding: 0 24px 12px;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      transform: translateY(calc(100% - 54px));
+      -webkit-transform: translateY(calc(100% - 54px));
+      transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+    }
+
+    .slider-card.active .slider-card-desc {
+      transform: none;
+      -webkit-transform: none;
+    }
+
+    .slider-card-desc p {
+      opacity: 0;
+      transform: translateY(32px);
+      -webkit-transform: translateY(32px);
+      transition: all 0.4s ease-in-out 0.2s;
+      -webkit-transition: all 0.4s ease-in-out 0.2s;
+      color: #fff;
+    }
+
+    .slider-card.active .slider-card-desc p {
+      opacity: 1;
+      transform: translateY(0);
+      -webkit-transform: translateY(0);
     }
 
     .slider-nav {
@@ -424,6 +460,7 @@
       font-size: 1.2rem;
       transition: all 0.3s ease;
       pointer-events: auto;
+      z-index: 2;
     }
 
     .slider-nav-button:hover {
@@ -439,13 +476,100 @@
       margin-right: -20px;
     }
 
-    @media (max-width: 768px) {
+    @media (min-width: 992px) and (max-width: 1199px) {
       .product-carousels {
-        padding: 2rem 1rem;
+        padding: 50px 30px;
+      }
+      .slider-container {
+        padding: 0 10px;
+      }
+      .slider-wrapper {
+        gap: 20px;
+        padding: 10px 0 50px;
+      }
+      .slider-card {
+        flex: 0 0 260px;
+        height: 360px;
+      }
+      .slider-card.active {
+        flex-basis: 400px;
+        width: 400px;
+      }
+      .slider-card h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin: 0 0 8px;
+      }
+      .slider-card-desc {
+        transform: translateY(calc(100% - 46px));
+        -webkit-transform: translateY(calc(100% - 46px));
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      .product-carousels {
+        padding: 50px 30px 40px;
+      }
+      .slider-container {
+        padding: 0 10px;
+      }
+      .slider-wrapper {
+        gap: 20px;
+        padding: 10px 0 40px;
+      }
+      .slider-card {
+        flex: 0 0 240px;
+        height: 330px;
+      }
+      .slider-card.active {
+        flex-basis: 360px;
+        width: 360px;
+      }
+      .slider-card h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin: 0 0 8px;
+      }
+      .slider-card-desc {
+        transform: translateY(calc(100% - 42px));
+        -webkit-transform: translateY(calc(100% - 42px));
+        padding: 0 14px 5px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .product-carousels {
+        padding: 30px 15px 20px;
+      }
+      .slider-container {
+        padding: 0;
+      }
+      .slider-wrapper {
+        gap: 15px;
+        padding: 10px 0 20px;
+      }
+      .slider-card {
+        flex: 0 0 200px;
+        height: 280px;
+        box-shadow: 6px 10px 10px rgba(0, 0, 0, 0.25);
+        -webkit-box-shadow: 6px 10px 10px rgba(0, 0, 0, 0.25);
       }
 
-      .slider-card {
-        flex: 0 0 250px;
+      .slider-card.active {
+        flex-basis: 270px;
+        width: 270px;
+        height: auto;
+      }
+
+      .slider-card h3 {
+        font-size: 19px;
+        line-height: 24px;
+      }
+
+      .slider-card-desc {
+        transform: translateY(calc(100% - 42px));
+        -webkit-transform: translateY(calc(100% - 42px));
+        padding: 0 14px 5px;
       }
 
       .slider-nav-button {
@@ -528,6 +652,8 @@
   </div>
 
   <script>
+    let currentEvent = null; // Declare a global variable to store event data
+
     async function loadEventPage() {
       try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -556,24 +682,32 @@
         heroImage.onerror = () => {
           document.getElementById('hero').style.backgroundImage = 'url(img/fallback.jpg)';
         };
-        heroImage.src = event.cleanTransparentImageUrl;
-        document.getElementById('hero').style.backgroundImage = `url(${event.cleanTransparentImageUrl})`;
+        if (event.cleanTransparentImageUrl) {
+          heroImage.src = event.cleanTransparentImageUrl;
+          document.getElementById('hero').style.backgroundImage = `url(${event.cleanTransparentImageUrl})`;
+        } else {
+           document.getElementById('hero').style.backgroundImage = 'url(img/fallback.jpg)';
+        }
 
         const artistImage = new Image();
         artistImage.onerror = () => {
           document.getElementById('artistImage').style.backgroundImage = 'url(img/fallback.jpg)';
         };
-        artistImage.src = event.imageUrl;
-        document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
+        if (event.imageUrl) {
+          artistImage.src = event.imageUrl;
+          document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
+        } else {
+           document.getElementById('artistImage').style.backgroundImage = 'url(img/fallback.jpg)';
+        }
 
-        document.getElementById('heroTitle').textContent = event.eventName;
+        document.getElementById('heroTitle').textContent = event.eventName || '';
         document.getElementById('heroTagline').textContent = "Live in Birmingham · One Night Only";
-        document.getElementById('eventDate').textContent = event.date;
-        document.getElementById('eventName').textContent = event.eventName;
-        document.getElementById('bio').textContent = event.bio;
+        document.getElementById('eventDate').textContent = event.date || '';
+        document.getElementById('eventName').textContent = event.eventName || '';
+        document.getElementById('bio').textContent = event.bio || '';
 
         const linksHtml = `
-          <a href="${event.standardLink}" target="_blank" rel="noopener">
+          <a href="${event.standardLink || '#'}" target="_blank" rel="noopener">
             <span>🎟</span> Standard Tickets
           </a>
           ${event.premiumLink ? `
@@ -581,7 +715,7 @@
               <span>💎</span> Premium Tickets
             </a>
           ` : ''}
-          <a href="${event.eventPageLink}" target="_blank" rel="noopener">
+          <a href="${event.eventPageLink || '#'}" target="_blank" rel="noopener">
             <span>ℹ️</span> More Info
           </a>
         `;
@@ -603,6 +737,7 @@
 
         // Hide loading screen
         document.getElementById('loading').style.display = 'none';
+
       } catch (error) {
         console.error('Error loading event:', error);
         document.body.innerHTML = `
@@ -632,62 +767,122 @@
       });
     });
 
-    loadEventPage();
-
     // Load products data
     async function loadProducts() {
       try {
+        console.log('loadProducts function started');
+        console.log('Loading products...');
         const response = await fetch('products.json');
         const data = await response.json();
+        console.log('Products loaded:', data);
         
+        // Updated to include all images from 1 to 19
+        const images = [
+            'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg', 'img/5.jpg',
+            'img/6.jpg', 'img/7.jpg', 'img/8.jpg', 'img/9.jpg', 'img/10.jpg',
+            'img/11.jpg', 'img/12.jpg', 'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
+            'img/16.jpg', 'img/17.jpg', 'img/18.jpg', 'img/19.jpg', 'img/fallback.jpg' // Keep fallback
+        ];
+
+        // Simple shuffle function (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        const shuffledImages = shuffleArray([...images]); // Shuffle the image array
+        let imageIndex = 0; // To cycle through shuffled images
+
+        function getNextImage() {
+            const imageUrl = shuffledImages[imageIndex % shuffledImages.length]; // Use shuffled array
+            imageIndex++;
+            return imageUrl;
+        }
+
         // Populate lounges
         const loungesHtml = data.venues.flatMap(venue => 
           venue.lounges.map(lounge => `
-            <div class="slider-card">
+            <div class="slider-card" style="background-image: url('${getNextImage()}')">
               <h3>${lounge.name}</h3>
-              <p>${lounge.description || 'Exclusive premium lounge experience'}</p>
+              <div class="slider-card-desc">
+                 <p>${lounge.description || 'Exclusive premium lounge experience'}</p>
+              </div>
             </div>
           `)
         ).join('');
+        console.log('Lounges HTML:', loungesHtml);
         document.getElementById('loungesCarousel').innerHTML = loungesHtml;
 
         // Populate packages
         const packagesHtml = data.premium_packages.map(pkg => `
-          <div class="slider-card">
+          <div class="slider-card" style="background-image: url('${getNextImage()}')">
             <h3>${pkg.name}</h3>
-            <ul>
-              ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
+            <div class="slider-card-desc">
+              <ul>
+                ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+              </ul>
+            </div>
           </div>
         `).join('');
+        console.log('Packages HTML:', packagesHtml);
         document.getElementById('packagesCarousel').innerHTML = packagesHtml;
 
         // Populate memberships
         const membershipsHtml = data.membership_products.map(membership => `
-          <div class="slider-card">
+          <div class="slider-card" style="background-image: url('${getNextImage()}')">
             <h3>${membership.name}</h3>
-            <ul>
-              ${membership.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
+            <div class="slider-card-desc">
+              <ul>
+                ${membership.features.map(feature => `<li>${feature}</li>`).join('')}
+              </ul>
+            </div>
           </div>
         `).join('');
+        console.log('Memberships HTML:', membershipsHtml);
         document.getElementById('membershipsCarousel').innerHTML = membershipsHtml;
+
+        // Add click listeners to cards after populating
+        document.querySelectorAll('.slider-card').forEach(card => {
+          card.addEventListener('click', () => {
+            toggleCardExpansion(card);
+          });
+        });
+
       } catch (error) {
         console.error('Error loading products:', error);
       }
     }
 
-    function moveSlider(sliderId, direction) {
-      const slider = document.getElementById(sliderId);
-      const scrollAmount = slider.offsetWidth * 0.8;
-      slider.scrollBy({
-        left: direction * scrollAmount,
+    function scrollGallery(direction) {
+      const gallery = document.getElementById('localImages');
+      const scrollAmount = gallery.offsetWidth * 0.8;
+      gallery.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
     }
 
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
     // Load products after the page loads
+    console.log('Adding window load event listener for loadProducts');
     window.addEventListener('load', loadProducts);
+
+    // Initial calls to load content
+    loadEventPage();
+    // loadProducts is called on window load via the event listener above
+
   </script>
 </body>
 </html>
