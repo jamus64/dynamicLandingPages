@@ -4,15 +4,63 @@
   <meta charset="UTF-8" />
   <title>Premium Event Experience</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+  <meta name="description" content="Experience premium events in Birmingham with exclusive access and VIP treatment." />
+  <meta property="og:title" content="Premium Event Experience" />
+  <meta property="og:description" content="Experience premium events in Birmingham with exclusive access and VIP treatment." />
+  <meta property="og:type" content="website" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #ff2e63;
+      --primary-dark: #d52b56;
+      --background-dark: #000;
+      --text-light: #fdfeff;
+      --text-muted: #a0a0a0;
+      --spacing-unit: 1rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       margin: 0;
       font-family: 'Work Sans', sans-serif;
-      background-color: #000;
-      color: #fdfeff;
+      background-color: var(--background-dark);
+      color: var(--text-light);
       overflow-x: hidden;
+      line-height: 1.6;
     }
+
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .loading::after {
+      content: '';
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--text-muted);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     .hero {
       width: 100%;
       height: 100vh;
@@ -21,52 +69,95 @@
       background-position: center;
       position: relative;
     }
+
     .hero::after {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,1));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
       pointer-events: none;
     }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator::before {
+      content: '↓';
+      color: var(--text-light);
+      font-size: 2rem;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
     .hero-content {
       position: absolute;
-      bottom: 3rem;
+      bottom: 30%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
       z-index: 2;
+      width: 90%;
+      max-width: 800px;
     }
+
     .hero-content h1 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 3rem;
+      font-size: clamp(2rem, 5vw, 4rem);
       margin: 0;
       color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
+
     .hero-content p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
       margin: 0.5rem 0;
       color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
+
+    .event-date {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
     .cta-button {
       display: inline-block;
-      margin-top: 1rem;
-      background: #ff2e63;
+      margin-top: 1.5rem;
+      background: var(--primary-color);
       color: white;
-      padding: 0.75rem 1.5rem;
+      padding: 1rem 2rem;
       border-radius: 50px;
       font-weight: bold;
       text-decoration: none;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
     }
+
     .cta-button:hover {
-      background: #d52b56;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
     }
+
     .content {
       padding: 2rem;
       animation: fadeInUp 1s ease-out forwards;
       max-width: 1200px;
       margin: 0 auto;
     }
+
     .chopped-hero {
       width: 100%;
       height: 70vh;
@@ -76,107 +167,269 @@
       -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
       margin-bottom: 2rem;
     }
+
+    .image-gallery {
+      position: relative;
+      margin: 3rem 0;
+    }
+
+    .gallery-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 2;
+    }
+
+    .gallery-control {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .gallery-control:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
     #localImages {
       display: flex;
       scroll-snap-type: x mandatory;
       overflow-x: scroll;
       gap: 1rem;
       padding: 2rem 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+
+    #localImages::-webkit-scrollbar {
+      display: none;
+    }
+
     #localImages img {
       scroll-snap-align: center;
       border-radius: 1rem;
-      height: 240px;
+      height: 300px;
       object-fit: cover;
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s ease;
     }
+
+    #localImages img:hover {
+      transform: scale(1.02);
+    }
+
     .ticket-links {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
       margin: 2rem 0;
     }
+
     .ticket-links a {
       background: #1a1a1a;
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      color: #fdfeff;
-      font-weight: bold;
+      padding: 1.5rem;
+      border-radius: 15px;
+      color: var(--text-light);
+      font-weight: 600;
       text-decoration: none;
-      border: 2px solid #ff2e63;
+      border: 2px solid var(--primary-color);
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-align: center;
     }
+
     .ticket-links a:hover {
-      background-color: #ff2e63;
-      color: #000;
+      background-color: var(--primary-color);
+      color: var(--background-dark);
+      transform: translateY(-2px);
     }
+
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.6s ease-out forwards;
     }
+
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        bottom: 20%;
+      }
+
+      .ticket-links {
+        grid-template-columns: 1fr;
+      }
+
+      #localImages img {
+        height: 250px;
+      }
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-light);
+    }
+
+    .error-message h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
+  <div id="loading" class="loading"></div>
   <div id="app">
     <div id="hero" class="hero">
       <div class="hero-content">
         <h1 id="heroTitle"></h1>
         <p id="heroTagline"></p>
+        <div id="eventDate" class="event-date"></div>
         <a href="#links" class="cta-button">Book Premium</a>
       </div>
+      <div class="scroll-indicator"></div>
     </div>
     <div id="artistImage" class="chopped-hero"></div>
     <div class="content">
       <h1 id="eventName" class="fade-in"></h1>
       <p id="bio" class="fade-in"></p>
       <div class="ticket-links fade-in" id="links"></div>
-      <div class="images" id="localImages"></div>
+      <div class="image-gallery">
+        <div class="gallery-controls">
+          <button class="gallery-control" onclick="scrollGallery('left')">←</button>
+          <button class="gallery-control" onclick="scrollGallery('right')">→</button>
+        </div>
+        <div class="images" id="localImages"></div>
+      </div>
     </div>
   </div>
 
   <script>
     async function loadEventPage() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetEvent = urlParams.get('event');
+        const response = await fetch('events_with_specific_bios.json');
+        const events = await response.json();
+        const event = events.find(e => e.eventName.toLowerCase().includes(targetEvent?.toLowerCase()));
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const targetEvent = urlParams.get('event');
-      const response = await fetch('events_with_specific_bios.json');
-      const events = await response.json();
-      const event = events.find(e => e.eventName.toLowerCase().includes(targetEvent?.toLowerCase()));
+        if (!event) {
+          document.body.innerHTML = `
+            <div class="error-message">
+              <h2>Event Not Found</h2>
+              <p>We couldn't find the event you're looking for. Please check the URL and try again.</p>
+            </div>`;
+          return;
+        }
 
-      if (!event) {
-        document.body.innerHTML = "<h2 style='color:white'>Event not found.</h2>";
-        return;
+        // Update meta tags for sharing
+        document.title = `${event.eventName} - Premium Experience`;
+        document.querySelector('meta[name="description"]').content = event.bio;
+        document.querySelector('meta[property="og:title"]').content = `${event.eventName} - Premium Experience`;
+        document.querySelector('meta[property="og:description"]').content = event.bio;
+
+        // Load images with error handling
+        const heroImage = new Image();
+        heroImage.onerror = () => {
+          document.getElementById('hero').style.backgroundImage = 'url(img/fallback.jpg)';
+        };
+        heroImage.src = event.cleanTransparentImageUrl;
+        document.getElementById('hero').style.backgroundImage = `url(${event.cleanTransparentImageUrl})`;
+
+        const artistImage = new Image();
+        artistImage.onerror = () => {
+          document.getElementById('artistImage').style.backgroundImage = 'url(img/fallback.jpg)';
+        };
+        artistImage.src = event.imageUrl;
+        document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
+
+        document.getElementById('heroTitle').textContent = event.eventName;
+        document.getElementById('heroTagline').textContent = "Live in Birmingham · One Night Only";
+        document.getElementById('eventDate').textContent = event.date;
+        document.getElementById('eventName').textContent = event.eventName;
+        document.getElementById('bio').textContent = event.bio;
+
+        const linksHtml = `
+          <a href="${event.standardLink}" target="_blank" rel="noopener">
+            <span>🎟</span> Standard Tickets
+          </a>
+          ${event.premiumLink ? `
+            <a href="${event.premiumLink}" target="_blank" rel="noopener">
+              <span>💎</span> Premium Tickets
+            </a>
+          ` : ''}
+          <a href="${event.eventPageLink}" target="_blank" rel="noopener">
+            <span>ℹ️</span> More Info
+          </a>
+        `;
+        document.getElementById('links').innerHTML = linksHtml;
+
+        const localImagesFolder = 'img/';
+        const imageCount = 4;
+        let imagesHtml = '';
+        for (let i = 1; i <= imageCount; i++) {
+          imagesHtml += `
+            <img 
+              src="${localImagesFolder}${i}.jpg" 
+              alt="Venue Image ${i}" 
+              class="fade-in"
+              onerror="this.src='img/fallback.jpg'"
+            >`;
+        }
+        document.getElementById('localImages').innerHTML = imagesHtml;
+
+        // Hide loading screen
+        document.getElementById('loading').style.display = 'none';
+      } catch (error) {
+        console.error('Error loading event:', error);
+        document.body.innerHTML = `
+          <div class="error-message">
+            <h2>Something Went Wrong</h2>
+            <p>We're having trouble loading the event. Please try again later.</p>
+          </div>`;
       }
-
-      document.getElementById('hero').style.backgroundImage = `url(${event.cleanTransparentImageUrl})`;
-      document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
-      document.getElementById('heroTitle').textContent = event.eventName;
-      document.getElementById('heroTagline').textContent = "Live in Birmingham · One Night Only";
-      document.getElementById('eventName').textContent = event.eventName;
-      document.getElementById('bio').textContent = event.bio;
-
-      const linksHtml = `
-        <a href="${event.standardLink}" target="_blank">🎟 Standard Tickets</a>
-        ${event.premiumLink ? `<a href="${event.premiumLink}" target="_blank">💎 Premium Tickets</a>` : ''}
-        <a href="${event.eventPageLink}" target="_blank">ℹ️ More Info</a>
-      `;
-      document.getElementById('links').innerHTML = linksHtml;
-
-      const localImagesFolder = 'img/';
-      const imageCount = 4;
-      let imagesHtml = '';
-      for (let i = 1; i <= imageCount; i++) {
-        imagesHtml += `<img src="${localImagesFolder}${i}.jpg" alt="Venue Image ${i}" class="fade-in">`;
-      }
-      document.getElementById('localImages').innerHTML = imagesHtml;
     }
+
+    function scrollGallery(direction) {
+      const gallery = document.getElementById('localImages');
+      const scrollAmount = gallery.offsetWidth * 0.8;
+      gallery.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
 
     loadEventPage();
   </script>
