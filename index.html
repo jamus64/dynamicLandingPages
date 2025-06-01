@@ -11,6 +11,7 @@
   <meta property="og:type" content="website" />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* General Styles */
     :root {
       --primary-color: #ff2e63;
       --primary-dark: #d52b56;
@@ -35,6 +36,7 @@
       line-height: 1.6;
     }
 
+    /* Loading Screen Styles */
     .loading {
       position: fixed;
       top: 0;
@@ -62,13 +64,23 @@
       to { transform: rotate(360deg); }
     }
 
+    /* Hero Section Styles */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
     .hero {
       width: 100%;
       height: 100vh;
       background-attachment: fixed;
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
       position: relative;
+      overflow: hidden;
     }
 
     .hero::after {
@@ -77,6 +89,7 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
       pointer-events: none;
+      z-index: 1;
     }
 
     .scroll-indicator {
@@ -100,42 +113,45 @@
       60% { transform: translateY(-10px); }
     }
 
-    .hero-content {
+    /* Styles for the new Hero Overlay Content */
+    .hero-overlay-content {
       position: absolute;
-      bottom: 30%;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       text-align: center;
       z-index: 2;
+      color: white;
       width: 90%;
       max-width: 800px;
-    }
-
-    .hero-content h1 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: clamp(2rem, 5vw, 4rem);
-      margin: 0;
-      color: white;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .hero-content p {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      margin: 0.5rem 0;
-      color: white;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    .hero-overlay-content h1 {
+        font-family: 'Bricolage Grotesque', sans-serif;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        margin: 0 0 10px;
     }
 
-    .event-date {
-      font-size: 1.1rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      font-weight: 600;
+    .hero-overlay-content p {
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        margin: 0 0 15px;
     }
 
-    .cta-button {
+    .hero-overlay-content .event-date,
+    .hero-overlay-content .venue-info {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        margin-bottom: 10px;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .hero-overlay-content .cta-button {
       display: inline-block;
-      margin-top: 1.5rem;
+      margin-top: 20px;
       background: var(--primary-color);
       color: white;
       padding: 1rem 2rem;
@@ -146,29 +162,65 @@
       box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
     }
 
-    .cta-button:hover {
+     .hero-overlay-content .cta-button:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
     }
 
-    .content {
-      padding: 2rem;
-      animation: fadeInUp 1s ease-out forwards;
-      max-width: 1200px;
-      margin: 0 auto;
+    /* Artist Info Card Styles */
+    .artist-info-card {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      margin: 0;
+      padding: 20px;
+      background-color: #1a1a1a;
+      box-shadow: 0 15px 30px rgba(255, 46, 99, 0.4);
+      overflow: hidden;
+      color: var(--text-light);
     }
 
-    .chopped-hero {
+    .artist-image-area {
       width: 100%;
-      height: 70vh;
-      background-size: cover;
+      min-height: 300px;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
-      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-      margin-bottom: 2rem;
+      border-radius: 8px;
+      margin-bottom: 20px;
     }
 
+    .artist-details-area {
+      flex-grow: 1;
+      padding: 30px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .artist-details-area h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: white;
+    }
+
+    .artist-details-area p {
+      font-size: clamp(1rem, 1.8vw, 1.1rem);
+      margin-bottom: 20px;
+      color: var(--text-muted);
+    }
+
+    .artist-details-area .ticket-links {
+       margin-top: 20px;
+       padding-top: 0;
+       border-top: none;
+    }
+
+    /* Image Gallery Styles */
     .image-gallery {
       position: relative;
       margin: 3rem 0;
@@ -198,10 +250,12 @@
       align-items: center;
       justify-content: center;
       transition: background 0.3s ease;
+      display:none;
     }
 
     .gallery-control:hover {
       background: rgba(0,0,0,0.8);
+      display:none;
     }
 
     #localImages {
@@ -212,6 +266,7 @@
       padding: 2rem 0;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      display: none;
     }
 
     #localImages::-webkit-scrollbar {
@@ -232,11 +287,11 @@
       transform: scale(1.02);
     }
 
+    /* Ticket Links Styles (General) - Used within Artist Info Card */
     .ticket-links {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
-      margin: 2rem 0;
     }
 
     .ticket-links a {
@@ -255,9 +310,30 @@
       text-align: center;
     }
 
-    .ticket-links a:hover {
+    .ticket-links a.ghost {
+      background: transparent;
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .ticket-links a.ghost:hover {
       background-color: var(--primary-color);
       color: var(--background-dark);
+    }
+
+    .ticket-links a.full-color {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
+    }
+
+    .ticket-links a.full-color:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
+    }
+
+    .ticket-links a:hover {
       transform: translateY(-2px);
     }
 
@@ -275,10 +351,6 @@
     }
 
     @media (max-width: 768px) {
-      .hero-content {
-        bottom: 20%;
-      }
-
       .ticket-links {
         grid-template-columns: 1fr;
       }
@@ -313,13 +385,13 @@
       font-size: 2rem;
       color: var(--text-light);
       margin-bottom: 2rem;
-      text-align: center;
+      text-align: left;
     }
 
     .slider-container {
       position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 100%;
+      margin: 0;
       padding: 0 15px;
     }
 
@@ -386,8 +458,8 @@
       color: #fff;
       position: relative;
       z-index: 1;
-      list-style: none; /* Ensure no default list style */
-      padding: 0; /* Remove default padding */
+      list-style: none;
+      padding: 0;
     }
 
     .slider-card li {
@@ -577,25 +649,71 @@
         height: 35px;
       }
     }
+
+    /* Media Queries */
+    @media (min-width: 768px) {
+      .artist-info-card {
+        flex-direction: row;
+        padding: 30px;
+      }
+      .artist-image-area {
+        width: 50%;
+      }
+    }
+
+    /* Content Section (Image Gallery, Product Carousels) */
+    .content {
+      padding: 2rem;
+      animation: fadeInUp 1s ease-out forwards;
+      max-width: 100%;
+      margin: 0;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Loading Screen -->
   <div id="loading" class="loading"></div>
+
+  <!-- Main Application Container -->
   <div id="app">
-    <div id="hero" class="hero">
-      <div class="hero-content">
-        <h1 id="heroTitle"></h1>
-        <p id="heroTagline"></p>
-        <div id="eventDate" class="event-date"></div>
-        <a href="#links" class="cta-button">Book Premium</a>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
+      <div id="hero" class="hero">
+        <!-- Content that overlays the hero image -->
+        <div class="hero-overlay-content">
+            <h1 id="heroShowTitle"></h1> <!-- New: Show Title -->
+            <p id="heroShowDescription"></p> <!-- New: Show Description -->
+            <div id="heroEventDate" class="event-date"></div> <!-- New: Event Date -->
+            <div id="heroVenue" class="venue-info"></div> <!-- New: Venue Info -->
+            <a href="#links" class="cta-button">Book Premium</a> <!-- Added Book Premium button -->
+        </div>
+
+        <!-- Removed Original Hero Content -->
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator"></div>
       </div>
-      <div class="scroll-indicator"></div>
     </div>
-    <div id="artistImage" class="chopped-hero"></div>
+
+    <!-- Artist Info Card -->
+    <div class="artist-info-card">
+      <div class="artist-image-area" id="artistImageArea">
+        <!-- Artist image will be set as background -->
+      </div>
+      <div class="artist-details-area">
+        <h1 id="eventName"></h1>
+        <p id="bio"></p>
+        <div class="ticket-links" id="links"></div> <!-- Ticket links inside the card -->
+      </div>
+    </div>
+
+    <!-- Content Section (Image Gallery, Product Carousels) -->
     <div class="content">
-      <h1 id="eventName" class="fade-in"></h1>
-      <p id="bio" class="fade-in"></p>
-      <div class="ticket-links fade-in" id="links"></div>
+
+      <!-- Image Gallery -->
       <div class="image-gallery">
         <div class="gallery-controls">
           <button class="gallery-control" onclick="scrollGallery('left')">←</button>
@@ -603,54 +721,56 @@
         </div>
         <div class="images" id="localImages"></div>
       </div>
+
+      <!-- Product Carousels -->
+      <div class="product-carousels">
+
+        <!-- Packages Carousel (Now Experiences) -->
+         <section class="carousel-section">
+           <h2 class="section-title">Experiences</h2>
+           <div class="slider-container">
+             <div class="slider-wrapper" id="packagesCarousel">
+               <!-- Packages will be populated here -->
+             </div>
+             <div class="slider-nav">
+               <button class="slider-nav-button prev" onclick="moveSlider('packagesCarousel', -1)">❮</button>
+               <button class="slider-nav-button next" onclick="moveSlider('packagesCarousel', 1)">❯</button>
+             </div>
+           </div>
+         </section>
+
+        <!-- Lounges Carousel -->
+        <section class="carousel-section">
+          <h2 class="section-title">Premium Lounges</h2>
+          <div class="slider-container">
+            <div class="slider-wrapper" id="loungesCarousel">
+              <!-- Lounges will be populated here -->
+            </div>
+            <div class="slider-nav">
+              <button class="slider-nav-button prev" onclick="moveSlider('loungesCarousel', -1)">❮</button>
+              <button class="slider-nav-button next" onclick="moveSlider('loungesCarousel', 1)">❯</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Memberships Carousel -->
+        <section class="carousel-section">
+          <h2 class="section-title">Memberships</h2>
+          <div class="slider-container">
+            <div class="slider-wrapper" id="membershipsCarousel">
+              <!-- Memberships will be populated here -->
+            </div>
+            <div class="slider-nav">
+              <button class="slider-nav-button prev" onclick="moveSlider('membershipsCarousel', -1)">❮</button>
+              <button class="slider-nav-button next" onclick="moveSlider('membershipsCarousel', 1)">❯</button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
-  <!-- Product Carousels -->
-  <div class="product-carousels">
-    <!-- Lounges Carousel -->
-    <section class="carousel-section">
-      <h2 class="section-title">Premium Lounges</h2>
-      <div class="slider-container">
-        <div class="slider-wrapper" id="loungesCarousel">
-          <!-- Lounges will be populated here -->
-        </div>
-        <div class="slider-nav">
-          <button class="slider-nav-button prev" onclick="moveSlider('loungesCarousel', -1)">❮</button>
-          <button class="slider-nav-button next" onclick="moveSlider('loungesCarousel', 1)">❯</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Packages Carousel -->
-    <section class="carousel-section">
-      <h2 class="section-title">Premium Packages</h2>
-      <div class="slider-container">
-        <div class="slider-wrapper" id="packagesCarousel">
-          <!-- Packages will be populated here -->
-        </div>
-        <div class="slider-nav">
-          <button class="slider-nav-button prev" onclick="moveSlider('packagesCarousel', -1)">❮</button>
-          <button class="slider-nav-button next" onclick="moveSlider('packagesCarousel', 1)">❯</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Memberships Carousel -->
-    <section class="carousel-section">
-      <h2 class="section-title">Membership Options</h2>
-      <div class="slider-container">
-        <div class="slider-wrapper" id="membershipsCarousel">
-          <!-- Memberships will be populated here -->
-        </div>
-        <div class="slider-nav">
-          <button class="slider-nav-button prev" onclick="moveSlider('membershipsCarousel', -1)">❮</button>
-          <button class="slider-nav-button next" onclick="moveSlider('membershipsCarousel', 1)">❯</button>
-        </div>
-      </div>
-    </section>
-  </div>
-
+  <!-- JavaScript -->
   <script>
     let currentEvent = null; // Declare a global variable to store event data
 
@@ -658,7 +778,7 @@
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const targetEvent = urlParams.get('event');
-        const response = await fetch('events_with_specific_bios.json');
+        const response = await fetch('events.json');
         const events = await response.json();
         const event = events.find(e => e.eventName.toLowerCase().includes(targetEvent?.toLowerCase()));
 
@@ -689,54 +809,75 @@
            document.getElementById('hero').style.backgroundImage = 'url(img/fallback.jpg)';
         }
 
-        const artistImage = new Image();
-        artistImage.onerror = () => {
-          document.getElementById('artistImage').style.backgroundImage = 'url(img/fallback.jpg)';
-        };
-        if (event.imageUrl) {
-          artistImage.src = event.imageUrl;
-          document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
-        } else {
-           document.getElementById('artistImage').style.backgroundImage = 'url(img/fallback.jpg)';
-        }
-
-        document.getElementById('heroTitle').textContent = event.eventName || '';
-        document.getElementById('heroTagline').textContent = "Live in Birmingham · One Night Only";
-        document.getElementById('eventDate').textContent = event.date || '';
-        document.getElementById('eventName').textContent = event.eventName || '';
-        document.getElementById('bio').textContent = event.bio || '';
-
-        const linksHtml = `
-          <a href="${event.standardLink || '#'}" target="_blank" rel="noopener">
-            <span>🎟</span> Standard Tickets
-          </a>
-          ${event.premiumLink ? `
-            <a href="${event.premiumLink}" target="_blank" rel="noopener">
-              <span>💎</span> Premium Tickets
-            </a>
-          ` : ''}
-          <a href="${event.eventPageLink || '#'}" target="_blank" rel="noopener">
-            <span>ℹ️</span> More Info
-          </a>
-        `;
-        document.getElementById('links').innerHTML = linksHtml;
-
-        const localImagesFolder = 'img/';
-        const imageCount = 4;
-        let imagesHtml = '';
-        for (let i = 1; i <= imageCount; i++) {
-          imagesHtml += `
-            <img 
-              src="${localImagesFolder}${i}.jpg" 
-              alt="Venue Image ${i}" 
-              class="fade-in"
-              onerror="this.src='img/fallback.jpg'"
-            >`;
-        }
-        document.getElementById('localImages').innerHTML = imagesHtml;
-
         // Hide loading screen
         document.getElementById('loading').style.display = 'none';
+
+        // --- Debugging: Check if key elements exist ---
+        // console.log('Debug: Checking for required elements...'); // Removed debug logs
+        // console.log('Debug: #artistImageArea', document.getElementById('artistImageArea')); // Removed debug logs
+        // console.log('Debug: #eventName', document.getElementById('eventName')); // Removed debug logs
+        // console.log('Debug: #bio', document.getElementById('bio')); // Removed debug logs
+        // console.log('Debug: #links', document.getElementById('links')); // Removed debug logs
+        // --- End Debugging ---
+
+        // Set artist image as background of new image area
+        const artistImageArea = document.getElementById('artistImageArea');
+        if (artistImageArea && event.imageUrl) {
+          const artistImage = new Image();
+          artistImage.onerror = () => {
+            artistImageArea.style.backgroundImage = 'url(img/fallback.jpg)';
+          };
+          artistImage.src = event.imageUrl;
+          artistImageArea.style.backgroundImage = `url(${event.imageUrl})`;
+        } else if (artistImageArea) {
+           artistImageArea.style.backgroundImage = 'url(img/fallback.jpg)';
+        }
+
+        // Set event name and bio in the new details area
+        const eventNameElement = document.getElementById('eventName');
+        if (eventNameElement) eventNameElement.textContent = event.eventName || '';
+
+        const bioElement = document.getElementById('bio');
+        if (bioElement) bioElement.textContent = event.bio || '';
+
+        // Set ticket links in the new links div
+        const linksElement = document.getElementById('links');
+        if (linksElement) {
+          const linksHtml = `
+            <a href="${event.standardLink || '#'}" target="_blank" rel="noopener" class="ghost">
+              <span>🎟</span> Standard Tickets
+            </a>
+            <a href="${event.premiumLink || '#'}" target="_blank" rel="noopener" class="full-color">
+              <span>💎</span> Go Premium
+            </a>
+            <a href="${event.eventPageLink || '#'}" target="_blank" rel="noopener" class="ghost">
+              <span>ℹ️</span> More Info
+            </a>
+          `;
+          console.log('Generated linksHtml:', linksHtml);
+          console.log('Target element for links (new location):', linksElement);
+          linksElement.innerHTML = linksHtml;
+
+          // Check if premiumLink is missing and log an error
+          if (!event.premiumLink) {
+            console.error(`Premium link is missing for event: ${event.eventName}`);
+          }
+        }
+
+        // New: Populate Hero Overlay Content
+        const heroShowTitleElement = document.getElementById('heroShowTitle');
+        if (heroShowTitleElement) heroShowTitleElement.textContent = event.eventName || '';
+
+        const heroShowDescriptionElement = document.getElementById('heroShowDescription');
+        if (heroShowDescriptionElement) heroShowDescriptionElement.textContent = "Live in Birmingham · One Night Only"; // Using static tagline for now
+
+        const heroEventDateElement = document.getElementById('heroEventDate');
+        if (heroEventDateElement) heroEventDateElement.textContent = event.date || '';
+
+        const heroVenueElement = document.getElementById('heroVenue');
+        if (heroVenueElement && event.venue) heroVenueElement.textContent = event.venue;
+
+        const localImagesFolder = 'img/';
 
       } catch (error) {
         console.error('Error loading event:', error);
@@ -851,6 +992,8 @@
           });
         });
 
+        console.log('Click listeners attached to ' + document.querySelectorAll('.slider-card').length + ' slider cards.');
+
       } catch (error) {
         console.error('Error loading products:', error);
       }
@@ -877,11 +1020,43 @@
 
     // Load products after the page loads
     console.log('Adding window load event listener for loadProducts');
-    window.addEventListener('load', loadProducts);
+    // window.addEventListener('load', loadProducts);
 
     // Initial calls to load content
-    loadEventPage();
+    // loadEventPage();
     // loadProducts is called on window load via the event listener above
+
+    // Wait for the DOM to be fully loaded before running scripts that interact with it
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded fired. Running loadEventPage and loadProducts.');
+      loadEventPage();
+      loadProducts();
+    });
+
+    function moveSlider(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const scrollAmount = slider.offsetWidth * 0.8;
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Function to toggle card expansion and manage active state
+    function toggleCardExpansion(cardElement) {
+      // Remove 'active' class from all other cards in the same carousel
+      const carouselWrapper = cardElement.closest('.slider-wrapper');
+      if (carouselWrapper) {
+        carouselWrapper.querySelectorAll('.slider-card').forEach(card => {
+          if (card !== cardElement) {
+            card.classList.remove('active');
+          }
+        });
+      }
+
+      // Toggle 'active' class on the clicked card
+      cardElement.classList.toggle('active');
+    }
 
   </script>
 </body>
