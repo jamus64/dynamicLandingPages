@@ -1,0 +1,113 @@
+
+
+
+Okay, I will remove the separate `private_suites` boolean and add "Private Suites" as an object to the `lounges` array for the "Utilita Arena Birmingham" venue, including a description property.
+
+```json
+{
+  "venues": [
+    {
+      "name": "bp pulse LIVE",
+      "lounges": [
+        {"name": "4/4 Lounge", "description": ""},
+        {"name": "Tempo Lounge", "description": ""},
+        {"name": "Hi-Fi Lounge", "description": ""},
+        {"name": "bp pulse Deck", "description": ""},
+        {"name": "Vinyl Bar", "description": ""}
+      ]
+    },
+    {
+      "name": "Utilita Arena Birmingham",
+      "lounges": [
+        {"name": "Acoustic Lounge", "description": ""},
+        {"name": "Electric Lounge", "description": ""},
+        {"name": "Frequency Deck", "description": ""},
+        {"name": "Remaster Lounge", "description": ""},
+        {"name": "Reverb Lounge", "description": ""},
+        {"name": "RPM Lounge", "description": ""},
+        {"name": "Edit Lounge", "description": ""},
+        {"name": "Private Suites", "description": ""}
+      ]
+    }
+  ],
+  "premium_packages": [
+    {
+      "name": "Elevate Experience",
+      "features": [
+        "Premium seat",
+        "Private entrance",
+        "Pre-show bar and lounge access",
+        "Drinks waiting at interval (pre-order)",
+        "Private WC & cloakroom",
+        "Access to merchandise"
+      ]
+    },
+    {
+      "name": "Signature Experience",
+      "features": [
+        "Premium seat",
+        "Private entrance",
+        "Pre-show bar and lounge access",
+        "Drinks waiting at interval (pre-order)",
+        "Private WC & cloakroom",
+        "Access to merchandise",
+        "Main meal + welcome drink",
+        "Post-show lounge hour",
+        "On-site parking"
+      ]
+    },
+    {
+      "name": "Luxe Experience",
+      "features": [
+        "Premium seat",
+        "Private entrance",
+        "Lounge with included drinks",
+        "Private WC & cloakroom",
+        "Access to merchandise"
+      ]
+    },
+    {
+      "name": "Ultimate Experience",
+      "features": [
+        "Premium seat",
+        "Private entrance",
+        "Lounge with included drinks",
+        "Private WC & cloakroom",
+        "Access to merchandise",
+        "Chef-curated menu",
+        "Drinks included until 30 mins post-show",
+        "Lounge open post-show",
+        "Parking included"
+      ]
+    }
+  ],
+  "membership_products": [
+    {
+      "name": "Icon Membership",
+      "features": [
+        "2 seats at 30 events/year",
+        "House view seats",
+        "Lounge with purchasable food & drinks",
+        "VIP entrance",
+        "Dedicated account manager",
+        "Post-show lounge access",
+        "Merch access",
+        "Car parking"
+      ]
+    },
+    {
+      "name": "Headliner Membership",
+      "features": [
+        "2 seats at 30 or 60 events/year",
+        "Premium balcony seats",
+        "Lounge with free food, drinks & Champagne",
+        "VIP entrance",
+        "Account manager",
+        "Post-show lounge access",
+        "Merch access",
+        "Parking"
+      ]
+    }
+  ]
+}
+```

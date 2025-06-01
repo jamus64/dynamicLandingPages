@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Premium Event Experience</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Work Sans', sans-serif;
+      background-color: #000;
+      color: #fdfeff;
+      overflow-x: hidden;
+    }
+    .hero {
+      width: 100%;
+      height: 100vh;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,1));
+      pointer-events: none;
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 3rem;
+      margin: 0;
+      color: white;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: white;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #ff2e63;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .cta-button:hover {
+      background: #d52b56;
+    }
+    .content {
+      padding: 2rem;
+      animation: fadeInUp 1s ease-out forwards;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .chopped-hero {
+      width: 100%;
+      height: 70vh;
+      background-size: cover;
+      background-position: center;
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      margin-bottom: 2rem;
+    }
+    #localImages {
+      display: flex;
+      scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      gap: 1rem;
+      padding: 2rem 0;
+    }
+    #localImages img {
+      scroll-snap-align: center;
+      border-radius: 1rem;
+      height: 240px;
+      object-fit: cover;
+    }
+    .ticket-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .ticket-links a {
+      background: #1a1a1a;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      color: #fdfeff;
+      font-weight: bold;
+      text-decoration: none;
+      border: 2px solid #ff2e63;
+      transition: all 0.3s ease;
+    }
+    .ticket-links a:hover {
+      background-color: #ff2e63;
+      color: #000;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="hero" class="hero">
+      <div class="hero-content">
+        <h1 id="heroTitle"></h1>
+        <p id="heroTagline"></p>
+        <a href="#links" class="cta-button">Book Premium</a>
+      </div>
+    </div>
+    <div id="artistImage" class="chopped-hero"></div>
+    <div class="content">
+      <h1 id="eventName" class="fade-in"></h1>
+      <p id="bio" class="fade-in"></p>
+      <div class="ticket-links fade-in" id="links"></div>
+      <div class="images" id="localImages"></div>
+    </div>
+  </div>
+
+  <script>
+    async function loadEventPage() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetEvent = urlParams.get('event');
+      const response = await fetch('events_with_specific_bios.json');
+      const events = await response.json();
+      const event = events.find(e => e.eventName.toLowerCase().includes(targetEvent?.toLowerCase()));
+
+      if (!event) {
+        document.body.innerHTML = "<h2 style='color:white'>Event not found.</h2>";
+        return;
+      }
+
+      document.getElementById('hero').style.backgroundImage = `url(${event.cleanTransparentImageUrl})`;
+      document.getElementById('artistImage').style.backgroundImage = `url(${event.imageUrl})`;
+      document.getElementById('heroTitle').textContent = event.eventName;
+      document.getElementById('heroTagline').textContent = "Live in Birmingham · One Night Only";
+      document.getElementById('eventName').textContent = event.eventName;
+      document.getElementById('bio').textContent = event.bio;
+
+      const linksHtml = `
+        <a href="${event.standardLink}" target="_blank">🎟 Standard Tickets</a>
+        ${event.premiumLink ? `<a href="${event.premiumLink}" target="_blank">💎 Premium Tickets</a>` : ''}
+        <a href="${event.eventPageLink}" target="_blank">ℹ️ More Info</a>
+      `;
+      document.getElementById('links').innerHTML = linksHtml;
+
+      const localImagesFolder = 'img/';
+      const imageCount = 4;
+      let imagesHtml = '';
+      for (let i = 1; i <= imageCount; i++) {
+        imagesHtml += `<img src="${localImagesFolder}${i}.jpg" alt="Venue Image ${i}" class="fade-in">`;
+      }
+      document.getElementById('localImages').innerHTML = imagesHtml;
+    }
+
+    loadEventPage();
+  </script>
+</body>
+</html>

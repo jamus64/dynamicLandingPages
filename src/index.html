@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Events</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fdfeff;
+      font-family: 'Work Sans', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #ff2e63;
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
+    .event-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .event-card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      width: 300px;
+    }
+    .event-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .event-card h2 {
+      font-size: 1.2em;
+      margin: 10px 0 5px;
+      color: #ff2e63;
+    }
+    .event-card a {
+      color: #dcb64f;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Upcoming Premium Events</h1>
+  <div id="event-list" class="event-list"></div>
+
+  <script>
+    fetch('events.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('event-list');
+
+        data.forEach(event => {
+          const card = document.createElement('div');
+          card.className = 'event-card';
+
+          const img = document.createElement('img');
+          img.src = event["Image URL"] || '';
+          img.alt = event["Event Name"];
+
+          const title = document.createElement('h2');
+          title.textContent = event["Event Name"];
+
+          const link = document.createElement('a');
+          link.href = event["Event Page Link"] || '#';
+          link.textContent = "View Event";
+
+          card.appendChild(img);
+          card.appendChild(title);
+          card.appendChild(link);
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error("Error loading JSON:", error);
+      });
+  </script>
+
+</body>
+</html>

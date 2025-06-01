@@ -1,0 +1,33 @@
+{
+  "logo": {
+    "primary": "Premium",
+    "variants": ["Outlined", "Solid"],
+    "emblem": {
+      "design": "P",
+      "styles": ["Outlined", "Solid"]
+    }
+  },
+  "typography": {
+    "headline_font": {
+      "name": "Bricolage Grotesque",
+      "weights": ["Extra Bold", "Bold", "Semi Bold", "Medium", "Regular", "Light"]
+    },
+    "body_font": {
+      "name": "Work Sans"
+    }
+  },
+  "colors": {
+    "vibrant": "#ff2e63",
+    "dark": "#1b1029",
+    "light": "#fdfcff",
+    "gold_accent": "#dcb64f"
+  },
+  "photography": {
+    "style": "Vibrant, nightlife, premium social settings with neon and glamour lighting",
+    "examples": [
+      "People enjoying drinks",
+      "Lounge settings",
+      "Neon lighting with cocktails"
+    ]
+  }
+}
